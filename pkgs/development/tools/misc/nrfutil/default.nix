@@ -1,6 +1,6 @@
-{ stdenv, python2Packages, fetchFromGitHub }:
+{ stdenv, python37Packages, fetchFromGitHub }:
 
-with python2Packages; buildPythonApplication rec {
+with python37Packages; buildPythonApplication rec {
   pname = "nrfutil";
   version = "5.2.0";
 
@@ -15,13 +15,6 @@ with python2Packages; buildPythonApplication rec {
     protobuf tqdm piccata pyspinel intelhex pyyaml crcmod libusb1 ipaddress ];
 
   checkInputs = [ nose behave ];
-
-  postPatch = ''
-    # remove version bound on pyyaml
-    sed -i /pyyaml/d requirements.txt
-
-    mkdir test-reports
-  '';
 
   meta = with stdenv.lib; {
     description = "Device Firmware Update tool for nRF chips";
